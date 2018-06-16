@@ -22,6 +22,8 @@ function setup() {
   biggieSmalls = createImg('assets/images/all-a-dream.gif')
 
   background(255)
+
+  displayTitle()
 }
 
 function mousePressed() {
@@ -55,7 +57,7 @@ function keyPressed() {
       playOnce(airhornSound)
 
       clearTimeout(showPartyParrot)
-      showPartyParrot = setTimeout(function() { partyParrot.hide() }, airhornSound.duration() * 1000)
+      showPartyParrot = setTimeout(function() { partyParrot.hide(); displayTitle() }, airhornSound.duration() * 1000)
       partyParrot.position(random(width - partyParrot.width), random(height - partyParrot.height))
       partyParrot.show()
       break
@@ -64,6 +66,8 @@ function keyPressed() {
 
 function playOnce(soundFile) {
   if (soundFile.isPlaying()) { soundFile.stop() }
+
+  clearTitle()
 
   soundFile.play()
 }
@@ -75,4 +79,22 @@ function squish(str) {
 
 function placeholder(str) {
   return str === undefined ? '---' : str
+}
+
+function displayTitle(title) {
+  push()
+  rectMode(CORNER)
+  fill('black')
+  textAlign(CENTER, CENTER)
+  textSize(32)
+  text("PRESS ME WHEN GOAL IS SCORED", 0, 0, width, height)
+
+  textSize(120)
+  textFont('Courier New')
+  text("↓", 0, 200, width, height)
+  pop()
+}
+
+function clearTitle() {
+  background(255)
 }
