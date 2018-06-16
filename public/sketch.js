@@ -1,5 +1,6 @@
 let partyParrot
 let showPartyParrot
+let showBiggieSmalls
 
 function preload() {
   roboto = loadFont('assets/fonts/RobotoMono.ttf')
@@ -18,6 +19,7 @@ function setup() {
   textSize(16)
 
   partyParrot = createImg('assets/images/partyparrot.gif')
+  biggieSmalls = createImg('assets/images/all-a-dream.gif')
 
   background(255)
 }
@@ -33,28 +35,37 @@ function keyPressed() {
   console.log(keyCode, 'is pressed')
 
   switch (key) {
-    case 'A':
-      if (biggieSound.isPlaying()) biggieSound.stop()
-      biggieSound.play()
+    case 'D':
+      playOnce(biggieSound)
+
+      clearTimeout(showBiggieSmalls)
+      showBiggieSmalls = setTimeout(function() { biggieSmalls.hide() }, biggieSound.duration() * 1000)
+      biggieSmalls.position(random(width - biggieSmalls.width), random(height - biggieSmalls.height))
+      biggieSmalls.show()
       break
     case 'S':
-      if (airhornSound.isPlaying()) airhornSound.stop()
-      airhornSound.play()
-      break
-    case 'D':
-      if (scratchSound.isPlaying()) scratchSound.stop()
-      scratchSound.play()
-      break
-    case 'F':
-      let duration = airhornSound.duration() * 1000
-      clearTimeout(showPartyParrot)
-      showPartyParrot = setTimeout(function() { partyParrot.hide() }, duration)
+      playOnce(scratchSound)
 
-      airhornSound.play()
+      // clearTimeout(showPartyParrot)
+      // showPartyParrot = setTimeout(function() { partyParrot.hide() }, airhornSound.duration() * 1000)
+      // partyParrot.position(random(width - partyParrot.width), random(height - partyParrot.height))
+      // partyParrot.show()
+      break
+    case 'A':
+      playOnce(airhornSound)
+
+      clearTimeout(showPartyParrot)
+      showPartyParrot = setTimeout(function() { partyParrot.hide() }, airhornSound.duration() * 1000)
       partyParrot.position(random(width - partyParrot.width), random(height - partyParrot.height))
       partyParrot.show()
       break
   }
+}
+
+function playOnce(soundFile) {
+  if (soundFile.isPlaying()) { soundFile.stop() }
+
+  soundFile.play()
 }
 
 // Utilities
