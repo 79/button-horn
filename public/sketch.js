@@ -57,9 +57,17 @@ function keyPressed() {
       playOnce(airhornSound)
 
       clearTimeout(showPartyParrot)
-      showPartyParrot = setTimeout(function() { partyParrot.hide(); displayTitle() }, airhornSound.duration() * 1000)
+      showPartyParrot = setTimeout(function() {
+          partyParrot.hide()
+          clearTitle()
+          displayTitle()
+      }, airhornSound.duration() * 1000)
       partyParrot.position(random(width - partyParrot.width), random(height - partyParrot.height))
       partyParrot.show()
+      break
+    case 'Q':
+      let foo = new p5.Speech()
+      foo.speak('hello gorgeous')
       break
   }
 }
@@ -68,6 +76,7 @@ function playOnce(soundFile) {
   if (soundFile.isPlaying()) { soundFile.stop() }
 
   clearTitle()
+  displayHiddenTitle()
 
   soundFile.play()
 }
@@ -87,11 +96,27 @@ function displayTitle(title) {
   fill('black')
   textAlign(CENTER, CENTER)
   textSize(32)
-  text("PRESS ME WHEN GOAL IS SCORED", 0, 0, width, height)
+  text("DO NOT PRESS  ", 0, 0, width, height)
 
   textSize(120)
   textFont('Courier New')
-  text("↓", 0, 200, width, height)
+  text("↓", 0, 150, width, height)
+  pop()
+}
+
+function displayHiddenTitle(title) {
+  push()
+  rectMode(CORNER)
+  fill('black')
+  textAlign(CENTER, CENTER)
+  textSize(100)
+  textFont('Impact')
+  text("SHOW ALL THINGS SHOW", 0, 0, width, height / 2)
+
+  textSize(48)
+  textFont('Courier New')
+  text("it's coming", 0, 200, width, height / 2)
+  text("JUNE 25th, 2019", 0, 300, width, height / 2)
   pop()
 }
 

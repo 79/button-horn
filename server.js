@@ -10,3 +10,7 @@ let server = require('http')
 
 app.use(express.static('public'))
 app.use('/scripts', express.static(__dirname + '/node_modules/'))
+
+app.get('/superb', function (req, res) {
+  res.send('superb.html')
+})
